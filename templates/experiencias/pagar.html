@@ -1,0 +1,17 @@
+{% extends 'panel/base.html' %}
+{% block title %}Pagar reserva · Aventuras del Sur{% endblock %}
+{% block panel %}
+<h1 class="h3 text-gray-900 mb-3">Pagar reserva</h1>
+<div class="card shadow-sm formulario"><div class="card-body">
+  <dl class="row mb-3">
+    <dt class="col-sm-4">Experiencia</dt><dd class="col-sm-8">{{ reserva.experiencia.titulo }}</dd>
+    <dt class="col-sm-4">Fecha</dt><dd class="col-sm-8">{{ reserva.experiencia.fecha_hora|date:"d/m/Y H:i" }}</dd>
+    <dt class="col-sm-4">Total</dt><dd class="col-sm-8 h4 text-gray-900">${{ reserva.experiencia.precio }} CLP</dd>
+  </dl>
+  <form method="post">
+    {% csrf_token %}
+    <button class="btn btn-success" type="submit"><i class="fas fa-credit-card mr-1" aria-hidden="true"></i>Confirmar pago</button>
+    <a class="btn btn-outline-secondary" href="{% url 'reservas' %}">Volver</a>
+  </form>
+</div></div>
+{% endblock %}

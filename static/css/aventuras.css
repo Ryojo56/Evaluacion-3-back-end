@@ -1,0 +1,18 @@
+body { background: #f6f8f7; color: #34463e; }
+.barra-publica { background-color: #183c31; }
+.portada { background: linear-gradient(115deg, #153d31, #2c604a); }
+.portada .lead { max-width: 38rem; }
+.acceso { max-width: 34rem; }
+.formulario { max-width: 47rem; }
+.btn-primary { background-color: #285d49; border-color: #285d49; }
+.btn-primary:hover, .btn-primary:focus { background-color: #184133; border-color: #184133; }
+.btn-outline-primary, a { color: #265b45; }
+.btn-outline-primary { border-color: #265b45; }
+.btn-outline-primary:hover { background-color: #265b45; border-color: #265b45; }
+.page-item.active .page-link { background-color: #285d49; border-color: #285d49; }
+.table { color: inherit; }
+.table td { vertical-align: middle; }
+@media (max-width: 575px) {
+  .portada h1 { font-size: 2.4rem; }
+  .sidebar .nav-item .nav-link { padding: .7rem .3rem; }
+}

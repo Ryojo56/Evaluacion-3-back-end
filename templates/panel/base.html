@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block cuerpo %}
+<div id="wrapper">
+  <ul id="accordionSidebar" class="navbar-nav sidebar sidebar-dark accordion barra-publica">
+    <li><a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'panel' %}">
+      <i class="fas fa-mountain" aria-hidden="true"></i><span class="sidebar-brand-text mx-2">Aventuras<br>del Sur</span>
+    </a></li>
+    <li><hr class="sidebar-divider my-0"></li>
+    <li class="nav-item"><a class="nav-link" href="{% url 'panel' %}"><i class="fas fa-tachometer-alt" aria-hidden="true"></i><span> Inicio</span></a></li>
+    {% if rol_actual == 'admin' %}
+      <li class="nav-item"><a class="nav-link" href="{% url 'usuarios' %}"><i class="fas fa-users" aria-hidden="true"></i><span> Usuarios</span></a></li>
+      <li class="nav-item"><a class="nav-link" href="{% url 'categorias' %}"><i class="fas fa-tags" aria-hidden="true"></i><span> Categorías</span></a></li>
+    {% endif %}
+    {% if rol_actual == 'admin' or rol_actual == 'guia' %}
+      <li class="nav-item"><a class="nav-link" href="{% url 'experiencias' %}"><i class="fas fa-hiking" aria-hidden="true"></i><span> {% if rol_actual == 'guia' %}Mis experiencias{% else %}Experiencias{% endif %}</span></a></li>
+    {% endif %}
+    {% if rol_actual == 'admin' or rol_actual == 'turista' %}
+      <li class="nav-item"><a class="nav-link" href="{% url 'reservas' %}"><i class="fas fa-ticket-alt" aria-hidden="true"></i><span> {% if rol_actual == 'turista' %}Mis reservas{% else %}Reservas{% endif %}</span></a></li>
+    {% endif %}
+    <li class="nav-item"><a class="nav-link" href="{% url 'catalogo' %}"><i class="fas fa-compass" aria-hidden="true"></i><span> Catálogo público</span></a></li>
+  </ul>
+  <div id="content-wrapper" class="d-flex flex-column">
+    <div id="content">
+      <nav class="navbar navbar-light bg-white topbar mb-4 shadow-sm justify-content-between">
+        <span class="text-gray-800"><strong>{{ user.username }}</strong>
+          <span class="d-none d-sm-inline"> · {% if rol_actual == 'admin' %}Administrador{% elif rol_actual == 'guia' %}Guía / Operador{% else %}Turista / Cliente{% endif %}</span>
+        </span>
+        <form method="post" action="{% url 'logout' %}">{% csrf_token %}
+          <button class="btn btn-outline-secondary btn-sm" type="submit">Cerrar sesión</button>
+        </form>
+      </nav>
+      <main class="container-fluid pb-4">
+        {% include 'mensajes.html' %}
+        {% block panel %}{% endblock %}
+      </main>
+    </div>
+  </div>
+</div>
+{% endblock %}

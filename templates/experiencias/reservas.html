@@ -1,0 +1,39 @@
+{% extends 'panel/base.html' %}
+{% block title %}Reservas · Aventuras del Sur{% endblock %}
+{% block panel %}
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+  <h1 class="h3 text-gray-900 mb-2">{% if rol_actual == 'turista' %}Mis reservas{% else %}Reservas{% endif %}</h1>
+  {% if rol_actual == 'admin' %}
+    <a class="btn btn-primary mb-2" href="{% url 'reserva_nueva' %}">Nueva reserva</a>
+  {% else %}
+    <a class="btn btn-primary mb-2" href="{% url 'catalogo' %}">Ver catálogo</a>
+  {% endif %}
+</div>
+<div class="card shadow-sm"><div class="card-body table-responsive">
+<table class="table table-striped tabla-datos">
+  <thead><tr>{% if rol_actual == 'admin' %}<th>Turista</th>{% endif %}<th>Experiencia</th><th>Inscripción</th><th>Pago</th><th class="sin-orden">Acciones</th></tr></thead>
+  <tbody>
+  {% for item in reservas %}
+    <tr>
+      {% if rol_actual == 'admin' %}<td>{{ item.usuario }}</td>{% endif %}
+      <td>{{ item.experiencia }}</td>
+      <td data-order="{{ item.fecha_inscripcion|date:'U' }}">{{ item.fecha_inscripcion|date:"d/m/Y H:i" }}</td>
+      <td><span class="badge {% if item.estado_pago == 'confirmado' %}badge-success{% else %}badge-warning{% endif %}">{{ item.get_estado_pago_display }}</span></td>
+      <td class="text-nowrap">
+        {% if rol_actual == 'admin' %}
+          <a class="btn btn-sm btn-outline-primary" href="{% url 'reserva_editar' item.pk %}">Editar pago</a>
+          <a class="btn btn-sm btn-outline-danger" href="{% url 'reserva_eliminar' item.pk %}">Eliminar</a>
+        {% elif item.estado_pago == 'pendiente' %}
+          <a class="btn btn-sm btn-success" href="{% url 'reserva_pagar' item.pk %}">Pagar</a>
+          <a class="btn btn-sm btn-outline-danger" href="{% url 'reserva_eliminar' item.pk %}">Cancelar</a>
+        {% else %}
+          <span class="text-muted">Pago confirmado</span>
+        {% endif %}
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div></div>
+{% endblock %}
+{% block tablas %}{% include 'tablas.html' %}{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'panel/base.html' %}
+{% block title %}Usuarios · Aventuras del Sur{% endblock %}
+{% block panel %}
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+  <h1 class="h3 text-gray-900 mb-2">Usuarios</h1>
+  <a class="btn btn-primary mb-2" href="{% url 'usuario_nuevo' %}">Nuevo usuario</a>
+</div>
+<div class="card shadow-sm"><div class="card-body table-responsive">
+<table class="table table-striped tabla-datos">
+  <thead><tr><th>Usuario</th><th>Nombre</th><th>Rol</th><th>Estado</th><th class="sin-orden">Acciones</th></tr></thead>
+  <tbody>
+  {% for cuenta in usuarios %}
+    <tr>
+      <td>{{ cuenta.username }}</td><td>{{ cuenta.get_full_name|default:"—" }}</td>
+      <td>{% if cuenta.is_superuser %}Administrador{% else %}{% with perfil=cuenta.perfiles.all.0 %}{{ perfil.get_rol_display|default:"Sin perfil" }}{% endwith %}{% endif %}</td>
+      <td>{% if cuenta.is_active %}Activa{% else %}Inactiva{% endif %}</td>
+      <td class="text-nowrap"><a class="btn btn-sm btn-outline-primary" href="{% url 'usuario_editar' cuenta.pk %}">Editar</a>
+        {% if cuenta != user and not cuenta.is_superuser %}<a class="btn btn-sm btn-outline-danger" href="{% url 'usuario_eliminar' cuenta.pk %}">Eliminar</a>{% endif %}
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div></div>
+{% endblock %}
+{% block tablas %}{% include 'tablas.html' %}{% endblock %}

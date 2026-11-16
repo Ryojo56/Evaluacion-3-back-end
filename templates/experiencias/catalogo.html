@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Catálogo · Aventuras del Sur{% endblock %}
+{% block contenido %}
+<h1 class="h2 text-gray-900 mb-3">Catálogo de experiencias</h1>
+<div class="card shadow-sm"><div class="card-body table-responsive">
+<table class="table table-striped tabla-datos">
+  <thead><tr><th>Experiencia</th><th>Categoría</th><th>Fecha</th><th>Precio CLP</th><th>Cupos</th><th class="sin-orden">Reserva</th></tr></thead>
+  <tbody>
+  {% for item in experiencias %}
+    <tr>
+      <td><strong>{{ item.titulo }}</strong><br><small>{{ item.descripcion }}</small></td>
+      <td>{{ item.categoria }}</td>
+      <td data-order="{{ item.fecha_hora|date:'U' }}">{{ item.fecha_hora|date:"d/m/Y H:i" }}</td>
+      <td data-order="{{ item.precio|stringformat:'d' }}">${{ item.precio }}</td>
+      <td data-order="{{ item.cupo_maximo }}">{{ item.ocupados }} / {{ item.cupo_maximo }} ocupados</td>
+      <td>
+        {% if item.ocupados >= item.cupo_maximo %}
+          <span class="badge badge-secondary">Sin cupos</span>
+        {% elif rol_actual == 'turista' %}
+          <form method="post" action="{% url 'reservar' item.pk %}">{% csrf_token %}<button class="btn btn-sm btn-primary" type="submit">Reservar</button></form>
+        {% elif not user.is_authenticated %}
+          <a href="{% url 'login' %}?next={% url 'catalogo' %}">Entra para reservar</a>
+        {% else %}
+          <span class="text-muted">Disponible</span>
+        {% endif %}
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div></div>
+{% endblock %}
+{% block tablas %}{% include 'tablas.html' %}{% endblock %}

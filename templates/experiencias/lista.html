@@ -1,0 +1,28 @@
+{% extends 'panel/base.html' %}
+{% block title %}Experiencias · Aventuras del Sur{% endblock %}
+{% block panel %}
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+  <h1 class="h3 text-gray-900 mb-2">{% if rol_actual == 'guia' %}Mis experiencias{% else %}Experiencias{% endif %}</h1>
+  <a class="btn btn-primary mb-2" href="{% url 'experiencia_nueva' %}">Nueva experiencia</a>
+</div>
+<div class="card shadow-sm"><div class="card-body table-responsive">
+<table class="table table-striped tabla-datos">
+  <thead><tr><th>Título</th><th>Categoría</th><th>Fecha</th><th>Precio CLP</th><th>Cupo</th><th>Creador</th><th>Estado</th><th class="sin-orden">Acciones</th></tr></thead>
+  <tbody>
+  {% for item in experiencias %}
+    <tr>
+      <td><strong>{{ item.titulo }}</strong><br><small>{{ item.descripcion }}</small></td><td>{{ item.categoria }}</td>
+      <td data-order="{{ item.fecha_hora|date:'U' }}">{{ item.fecha_hora|date:"d/m/Y H:i" }}</td>
+      <td data-order="{{ item.precio|stringformat:'d' }}">${{ item.precio }}</td><td>{{ item.cupo_maximo }}</td><td>{{ item.creador }}</td>
+      <td>{% if item.activa %}Activa{% else %}Inactiva{% endif %}</td>
+      <td class="text-nowrap">
+        <a class="btn btn-sm btn-outline-primary" href="{% url 'experiencia_editar' item.pk %}">Editar</a>
+        {% if rol_actual == 'admin' %}<a class="btn btn-sm btn-outline-danger" href="{% url 'experiencia_eliminar' item.pk %}">Eliminar</a>{% endif %}
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div></div>
+{% endblock %}
+{% block tablas %}{% include 'tablas.html' %}{% endblock %}

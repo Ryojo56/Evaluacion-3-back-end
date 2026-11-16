@@ -1,0 +1,13 @@
+{% extends 'panel/base.html' %}
+{% block title %}{{ titulo }} · Aventuras del Sur{% endblock %}
+{% block panel %}
+<h1 class="h3 text-gray-900 mb-3">{{ titulo }}</h1>
+<div class="card shadow-sm formulario"><div class="card-body">
+  <p>Confirma la acción sobre <strong>{{ objeto }}</strong>.</p>
+  <form method="post">
+    {% csrf_token %}
+    <button class="btn btn-danger" type="submit">Confirmar</button>
+    <a class="btn btn-outline-secondary" href="{% url volver %}">Volver</a>
+  </form>
+</div></div>
+{% endblock %}

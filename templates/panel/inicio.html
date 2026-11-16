@@ -1,0 +1,14 @@
+{% extends 'panel/base.html' %}
+{% block title %}Panel · Aventuras del Sur{% endblock %}
+{% block panel %}
+<h1 class="h3 text-gray-900 mb-4">Panel de {{ user.first_name|default:user.username }}</h1>
+<div class="row">
+  {% for etiqueta, cantidad, destino in cifras %}
+  <div class="col-xl-4 col-md-6 mb-3">
+    <a class="card border-left-success shadow-sm h-100 text-decoration-none" href="{% url destino %}">
+      <div class="card-body"><div class="font-weight-bold">{{ etiqueta }}</div><div class="h3 text-gray-900 mb-0">{{ cantidad }}</div></div>
+    </a>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

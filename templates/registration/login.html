@@ -1,0 +1,12 @@
+{% extends 'base_login.html' %}
+{% block title %}Iniciar sesión · Aventuras del Sur{% endblock %}
+{% block contenido %}
+<h1 class="h3 text-gray-900 mb-4">Iniciar sesión</h1>
+<form method="post">
+  {% csrf_token %}
+  {% include 'campos.html' %}
+  {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+  <button class="btn btn-primary btn-block" type="submit">Entrar al panel</button>
+</form>
+<p class="mt-3 mb-0"><a href="{% url 'signup' %}">Crear una cuenta de turista</a></p>
+{% endblock %}

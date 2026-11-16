@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block title %}Acceso restringido · Aventuras del Sur{% endblock %}
+{% block contenido %}
+<h1 class="h2 text-gray-900">Acceso restringido</h1>
+<p>Tu cuenta no tiene permiso para realizar esta acción.</p>
+<a href="{% url 'panel' %}">Volver al panel</a>
+{% endblock %}

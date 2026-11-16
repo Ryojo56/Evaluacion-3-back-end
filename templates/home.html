@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block contenido %}
+<section class="portada text-white p-4 p-md-5 mb-5 rounded">
+  <p class="mb-2 font-weight-bold">Ecoparque y reserva natural</p>
+  <h1 class="display-4 font-weight-bold mb-3">Aventuras del Sur</h1>
+  <p class="lead mb-4">Recorre senderos de bosque, navega en kayak o explora el parque desde las alturas con nuestros guías.</p>
+  <a class="btn btn-light font-weight-bold mr-2 mb-2" href="{% url 'catalogo' %}">Explorar experiencias</a>
+  {% if not user.is_authenticated %}<a class="btn btn-outline-light mb-2" href="{% url 'login' %}">Iniciar sesión</a>{% endif %}
+</section>
+<section aria-labelledby="proximas">
+  <h2 class="h3 text-gray-900 mb-3" id="proximas">Próximas experiencias</h2>
+  <div class="row">
+    {% for experiencia in destacadas %}
+      <div class="col-md-4 mb-3"><article class="card h-100 shadow-sm"><div class="card-body">
+        <p class="text-success small font-weight-bold mb-2">{{ experiencia.categoria }}</p>
+        <h3 class="h5 text-gray-900">{{ experiencia.titulo }}</h3>
+        <p>{{ experiencia.descripcion }}</p>
+        <p class="mb-0">{{ experiencia.fecha_hora|date:"d/m/Y H:i" }} · ${{ experiencia.precio }}</p>
+      </div></article></div>
+    {% empty %}
+      <div class="col"><p>Las próximas fechas se publicarán en el catálogo.</p></div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'panel/base.html' %}
+{% block title %}Categorías · Aventuras del Sur{% endblock %}
+{% block panel %}
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+  <h1 class="h3 text-gray-900 mb-2">Categorías</h1>
+  <a class="btn btn-primary mb-2" href="{% url 'categoria_nueva' %}">Nueva categoría</a>
+</div>
+<div class="card shadow-sm"><div class="card-body table-responsive">
+<table class="table table-striped tabla-datos">
+  <thead><tr><th>Nombre</th><th>Descripción</th><th>Estado</th><th class="sin-orden">Acciones</th></tr></thead>
+  <tbody>
+  {% for item in categorias %}
+    <tr>
+      <td>{{ item.nombre }}</td><td>{{ item.descripcion }}</td><td>{% if item.activa %}Activa{% else %}Inactiva{% endif %}</td>
+      <td class="text-nowrap"><a class="btn btn-sm btn-outline-primary" href="{% url 'categoria_editar' item.pk %}">Editar</a>
+        <a class="btn btn-sm btn-outline-danger" href="{% url 'categoria_eliminar' item.pk %}">Eliminar</a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div></div>
+{% endblock %}
+{% block tablas %}{% include 'tablas.html' %}{% endblock %}

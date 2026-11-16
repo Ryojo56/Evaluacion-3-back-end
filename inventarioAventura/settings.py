@@ -57,22 +57,16 @@ WSGI_APPLICATION = 'inventarioAventura.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-if os.getenv("DJANGO_DB_ENGINE", "mysql") == "sqlite":
-    DATABASES = {"default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }}
-else:
-    import pymysql
 
-    pymysql.install_as_MySQLdb()
-    DATABASES = {"default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "db_aventuras_sur",
-        "USER": "admin",
-        "PASSWORD":  "2026",
-        "CONN_MAX_AGE": 60,
+import pymysql
 
+pymysql.install_as_MySQLdb()
+DATABASES = {"default": {
+    "ENGINE": "django.db.backends.mysql",
+    "NAME": "db_aventuras_sur",
+    "USER": "admin",
+    "PASSWORD":  "2026",
+    "CONN_MAX_AGE": 60,
     }}
 
 

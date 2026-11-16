@@ -7,7 +7,6 @@ from .models import EstadoPago, Experiencia, Reserva
 
 @transaction.atomic
 def crear_reserva(usuario, experiencia_id, estado_pago=EstadoPago.PENDIENTE):
-    # Todas las altas y cambios de cupo bloquean la misma experiencia en MySQL.
     experiencia = get_object_or_404(Experiencia.objects.select_for_update(), pk=experiencia_id)
     if not Experiencia.objects.disponibles().filter(pk=experiencia_id).exists():
         raise ValidationError("Esta experiencia ya no está disponible para reservar.")

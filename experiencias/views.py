@@ -178,7 +178,6 @@ def eliminar_reserva(request, pk):
 @requiere_rol(Rol.TURISTA)
 @require_http_methods(["GET", "POST"])
 def pagar_reserva(request, pk):
-    # Pago simulado: el turista confirma el pago de una reserva propia pendiente.
     with transaction.atomic():
         queryset = Reserva.objects.filter(usuario=request.user)
         if request.method == "POST":

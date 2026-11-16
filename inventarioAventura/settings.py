@@ -4,7 +4,6 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATE_DIR = BASE_DIR / "templates"
 
-# La clave por defecto y DEBUG están pensados para una demo local.
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "django-insecure-solo-desarrollo-aventuras-del-sur")
 
 DEBUG = os.getenv("DJANGO_DEBUG", "1") == "1"
@@ -66,14 +65,13 @@ if os.getenv("DJANGO_DB_ENGINE", "mysql") == "sqlite":
 else:
     import pymysql
 
-    # Conserva el mismo controlador que usaba el proyecto base del profesor.
     pymysql.install_as_MySQLdb()
     DATABASES = {"default": {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "db_aventuras_sur",
         "USER": "admin",
         "PASSWORD":  "2026",
-        "CONN_MAX_AGE": 60,  # reutiliza la conexión durante 60 segundos
+        "CONN_MAX_AGE": 60,
 
     }}
 

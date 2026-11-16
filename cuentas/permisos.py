@@ -9,7 +9,6 @@ from .models import Rol
 def rol_usuario(usuario):
     if not usuario.is_authenticated or not usuario.is_active:
         return None
-    # Se guarda en el objeto para no repetir la consulta en la misma petición.
     if not hasattr(usuario, "_rol_cache"):
         if usuario.is_superuser:
             usuario._rol_cache = Rol.ADMIN
